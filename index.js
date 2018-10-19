@@ -487,3 +487,415 @@ for (var i = 1; i < 10; i += 2) {
   myArray.push(i);
 }
 
+var myArr = [ 2, 3, 4, 5, 6];
+var total = 0;
+for (var i = 0; i < myArr.length; i++) {
+  total += myArr[i];
+}
+
+function multiplyAll(arr) {
+  var product = 1;
+for(var i = 0; i < arr.length; i++) {
+    for (var j = 0; j < arr[i].length; j++) {
+      product = product * arr[i][j];
+    }
+  }
+  return product; 
+}
+multiplyAll([[1,2],[3,4],[5,6,7]]);
+
+// Do While Loops
+var myArray = [];
+var i = 10;
+
+do {
+  myArray.push(i);
+  i++;
+} while (i < 10);
+
+var contacts = [
+  {
+      "firstName": "Akira",
+      "lastName": "Laine",
+      "number": "0543236543",
+      "likes": ["Pizza", "Coding", "Brownie Points"]
+  },
+  {
+      "firstName": "Harry",
+      "lastName": "Potter",
+      "number": "0994372684",
+      "likes": ["Hogwarts", "Magic", "Hagrid"]
+  },
+  {
+      "firstName": "Sherlock",
+      "lastName": "Holmes",
+      "number": "0487345643",
+      "likes": ["Intriguing Cases", "Violin"]
+  },
+  {
+      "firstName": "Kristian",
+      "lastName": "Vos",
+      "number": "unknown",
+      "likes": ["JavaScript", "Gaming", "Foxes"]
+  }
+];
+
+function lookUpProfile(name, prop){
+for (var x = 0; x < contacts.length; x++){
+  if (contacts[x].firstName === name) {
+      if (contacts[x].hasOwnProperty(prop)) {
+          return contacts[x][prop];
+      } else {
+          return "No such property";
+      }
+  }
+}
+return "No such contact";
+}
+lookUpProfile("Akira", "likes");
+
+// Random Numbers 
+function randomFraction() {
+  return Math.random();     // Random Decimal 
+}
+
+function randomWholeNum() {
+  return Math.floor(Math.random() * 10);  // Round decimal to nearest whole number then multiply - this specfic returns number between 1-9
+}
+
+
+function randomRange(myMin, myMax) {
+  return Math.floor(Math.random() * (myMax - myMin + 1)) + myMin; 
+}
+var myRandom = randomRange(5, 15);
+
+// Convert to Int 
+function convertToInteger(str) {
+  return parseInt(str);
+}
+convertToInteger("56");
+
+// Ternary Operators
+function checkEqual(a, b) {
+  return a == b ? true : false;
+}
+
+checkEqual(1, 2);
+
+function checkSign(num) {
+  return (num > 0) ? "positive" : (num < 0) ? "negative" : "zero";
+}
+checkSign(10);
+
+
+//
+// ES6 - All modern browsers support it 
+//
+
+// Strict Mode 
+"use strict";
+x = 3.14; // throws an error because x is not declared
+
+// Let - Can change,  local variable instead of global like var
+let x = 1;
+
+if (x === 1) {
+  let x = 2;
+  console.log(x);
+  // expected output: 2
+}
+
+// Constants - All Caps for naming common
+const FAV_PET = "Cats";
+FAV_PET = "Dogs"; // returns error
+
+"use strict";
+const s = [5, 6, 7];
+s = [1, 2, 3]; // throws error, trying to assign a const
+s[2] = 45; // works just as it would with an array declared with var or let
+console.log(s); // returns [5, 6, 45]
+
+// Object Freeze
+let obj = {
+  name:"FreeCodeCamp",
+  review:"Awesome"
+};
+Object.freeze(obj);
+obj.review = "bad"; //will be ignored. Mutation not allowed
+obj.newProp = "Test"; // will be ignored. Mutation not allowed
+console.log(obj);
+// { name: "FreeCodeCamp", review:"Awesome"}
+
+// Anononymous Functions
+const myFunc = () => {
+  const myVar = "value";
+  return myVar;
+}
+
+// doubles input value and returns it
+const doubler = (item) => item * 2;
+
+const myConcat = (arr1, arr2) => {
+  "use strict";
+  return arr1.concat(arr2);
+};
+
+// Default Parameters 
+function greeting(name = "Anonymous") {
+  return "Hello " + name;
+}
+console.log(greeting("John")); // Hello John
+console.log(greeting()); // Hello Anonymous
+
+// Rest Operators -  Can create functions that take a variable number of arguments. These arguments are stored in an array that can be accessed later from inside the function.
+function howMany(...args) {
+  return "You have passed " + args.length + " arguments.";
+}
+console.log(howMany(0, 1, 2)); // You have passed 3 arguments
+console.log(howMany("string", null, [1, 2, 3], { })); // You have passed 4 arguments.
+
+// Spread Operator - Expand arrays and other expressions in places where multiple parameters or elements are expected.
+const arr = [6, 89, 3, 45];
+const maximus = Math.max(...arr); // returns 89
+
+// Destructuring objects to assign to Variable 
+const AVG_TEMPERATURES = {
+  today: 77.5,
+  tomorrow: 79
+};
+
+function getTempOfTmrw(avgTemperatures) {
+  "use strict";
+  // change code below this line
+   const { tomorrow: tempOfTomorrow } = avgTemperatures
+  // change code above this line
+  return tempOfTomorrow;
+}
+
+console.log(getTempOfTmrw(AVG_TEMPERATURES)); // should be 79
+
+const LOCAL_FORECAST = {
+  today: { min: 72, max: 83 },
+  tomorrow: { min: 73.3, max: 84.6 }
+};
+
+function getMaxOfTmrw(forecast) {
+  "use strict";
+    const { tomorrow: { max: maxOfTomorrow}} = forecast;
+  return maxOfTomorrow;
+}
+
+console.log(getMaxOfTmrw(LOCAL_FORECAST)); // should be 84.6
+
+// Destructing Arrays to assing Variables
+
+const [a, b] = [1, 2, 3, 4, 5, 6];
+console.log(a, b); // 1, 2
+
+const [a, b,,, c] = [1, 2, 3, 4, 5, 6];
+console.log(a, b, c); // 1, 2, 5 
+
+// Strings using Template Literals
+
+const person = {
+  name: "Zodiac Hasbro",
+  age: 56
+};
+
+// Template literal with multi-line and string interpolation
+const greeting = `Hello, my name is ${person.name}!
+I am ${person.age} years old.`;
+
+console.log(greeting); // prints
+// Hello, my name is Zodiac Hasbro!
+// I am 56 years old.
+
+// Functions - can be done with keyword 
+const person = {
+  name: "Taylor",
+  sayHello() {
+    return `Hello! My name is ${this.name}.`;
+  }
+};
+
+// Getters and Setters to Control Access to an Object
+class Book {
+  constructor(author) {
+    this._author = author;
+  }
+  // getter
+  get writer(){
+    return this._author;
+  }
+  // setter
+  set writer(updatedAuthor){
+    this._author = updatedAuthor;
+  }
+}
+const lol = new Book('anonymous');
+console.log(lol.writer);  // anonymous
+lol.writer = 'wut';
+console.log(lol.writer);  // wut
+
+// Import
+import { function } from "file_path_goes_here"
+// We can also import variables the same way!
+
+import subtract from "math_functions";              // Default (Fallback) - can only have one 
+
+// Import Everything 
+import * as myCaptialStrings from "capitalize_strings";
+
+// Export 
+const capitalizeString = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+const foo = "bar";
+export { capitalizeString, foo }
+
+export default function subtract(x,y) {return x - y;} // Fallback - can only have one 
+
+//
+// Not ES6 specific? 
+//
+
+// Test Method 
+
+let testStr = "freeCodeCamp";
+let testRegex = /Code/;
+testRegex.test(testStr);
+
+let petString = "James has a pet cat.";
+let petRegex = /dog|cat|bird|fish/; 
+let result = petRegex.test(petString);
+
+let myString = "freeCodeCamp";
+let fccRegex = /freeCodeCamp/i; // Ignores the case
+let result = fccRegex.test(myString);
+
+let extractStr = "Extract the word 'coding' from this string.";
+let codingRegex = /coding/; 
+let result = extractStr.match(codingRegex); // Match method to extract found string 
+
+let twinkleStar = "Twinkle, twinkle, little star";
+let starRegex = /twinkle/gi; // G = Search for more than one / = I = Case Insensitive 
+let result = twinkleStar.match(starRegex); 
+
+let humStr = "I'll hum a song";
+let hugStr = "Bear hug";
+let huRegex = /hu./;                      // Wilcard = Search for any words containing x 
+humStr.match(huRegex); // Returns ["hum"]
+hugStr.match(huRegex); // Returns ["hug"]
+
+let bigStr = "big";
+let bagStr = "bag";
+let bugStr = "bug";
+let bogStr = "bog";
+let bgRegex = /b[aiu]g/;                  // Character classes = Search for all instances of characters 
+bigStr.match(bgRegex); // Returns ["big"]
+bagStr.match(bgRegex); // Returns ["bag"]
+bugStr.match(bgRegex); // Returns ["bug"]
+bogStr.match(bgRegex); // Returns null
+
+let catStr = "cat";
+let batStr = "bat";
+let matStr = "mat";
+let bgRegex = /[a-e]at/;                // Characeter set = Define a range of characters
+catStr.match(bgRegex); // Returns ["cat"]
+batStr.match(bgRegex); // Returns ["bat"]
+matStr.match(bgRegex); // Returns null
+
+let quoteSample = "Blueberry 3.141592653s are delicious.";
+let myRegex = /[h-s2-6]/gi; // Can use numbers and characters 
+let result = quoteSample.match(myRegex); 
+
+let quoteSample = "3 blind mice.";
+let myRegex = /[^aeiou0-9]/gi; // ^ = Don't find these characters / numbers 
+let result = quoteSample.match(myRegex); 
+
+let difficultSpelling = "Mississippi";
+let myRegex = /s+/g; // See if character appears more than once 
+let result = difficultSpelling.match(myRegex);
+
+let text = "<h1>Winter is coming</h1>";
+let myRegex = /<h1>?/; //   ? - Laxy Match =  finds the smallest possible part of the string that satisfies the regex pattern
+let result = text.match(myRegex);
+
+let theEnding = "This is a never ending story";
+let storyRegex = /story$/;                      // $ = Search at end of string 
+storyRegex.test(theEnding);
+// Returns true
+
+let quoteSample = "The five boxing wizards jump quickly.";
+let alphabetRegexV2 = /\w/g; // \w to count the number of alphanumeric characters in various quotes and strings.
+let result = quoteSample.match(alphabetRegexV2).length;
+
+let quoteSample = "The five boxing wizards jump quickly.";
+let nonAlphabetRegex = /\W/g; // \W to count the number of non-alphanumeric characters in various quotes and strings.
+let result = quoteSample.match(nonAlphabetRegex).length;
+
+let numString = "Your sandwich will be $5.00";
+let numRegex = /\d/g; // Looks for digit characters e.g. 1 
+let result = numString.match(numRegex).length;
+
+let numString = "Your sandwich will be $5.00";
+let noNumRegex = /\D/g; // Look for non digits 
+let result = numString.match(noNumRegex).length;
+
+
+let username = "JackOfAllTrades";
+let userCheck = /^[a-z]{2,}\d*$/i; // Username must have more than 2 characters (any case), numbers can only be at end
+let result = userCheck.test(username);
+
+let whiteSpace = "Whitespace. Whitespace everywhere!"
+let spaceRegex = /\s/g;
+whiteSpace.match(spaceRegex);
+// Returns [" ", " "]
+
+let sample = "Whitespace is important in separating words";
+let countNonWhiteSpace = /\S/g;
+let result = sample.match(countNonWhiteSpace);
+
+let A4 = "aaaah";
+let A2 = "aah";
+let multipleA = /a{3,5}h/;          // Match between 3 to 5 "a"
+multipleA.test(A4); // Returns true
+multipleA.test(A2); // Returns false
+
+let haStr = "Hazzzzah";
+let haRegex = /z{4,}ah/; // Match only when 4 more "z" appear 
+let result = haRegex.test(haStr);
+
+let american = "color";
+let british = "colour";
+let rainbowRegex= /colou?r/;                // Optional = checks for zero or one of the preceding element
+rainbowRegex.test(american); // Returns true
+rainbowRegex.test(british); // Returns true
+
+// Debugging
+let seven = 7;
+let three = "3";
+console.log(seven + three);
+
+console.log(typeof seven)   // Type of Data
+console.log(typeof three)
+
+// Copy Array using Slice
+
+let weatherConditions = ['rain', 'snow', 'sleet', 'hail', 'clear'];
+let todaysWeather = weatherConditions.slice(1, 3);
+// todaysWeather equals ['snow', 'sleet'];
+// weatherConditions still equals ['rain', 'snow', 'sleet', 'hail', 'clear']
+
+// Combine Arrays using Spread
+
+let thisArray = ['sage', 'rosemary', 'parsley', 'thyme'];
+let thatArray = ['basil', 'cilantro', ...thisArray, 'coriander'];
+// thatArray now equals ['basil', 'cilantro', 'sage', 'rosemary', 'parsley', 'thyme', 'coriander']
+
+// Check for presence of Element with Index Of
+let fruits = ['apples', 'pears', 'oranges', 'peaches', 'pears'];
+
+fruits.indexOf('dates') // returns -1
+fruits.indexOf('oranges') // returns 2
+fruits.indexOf('pears') // returns 1, the first index at which the element exists
