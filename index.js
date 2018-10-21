@@ -899,3 +899,85 @@ let fruits = ['apples', 'pears', 'oranges', 'peaches', 'pears'];
 fruits.indexOf('dates') // returns -1
 fruits.indexOf('oranges') // returns 2
 fruits.indexOf('pears') // returns 1, the first index at which the element exists
+
+// Objects 
+let dog = {
+  name: "Lou",
+  numLegs: 4
+  sayLegs: function() {return "This dog has " + dog.numLegs + " legs.";}
+};
+console.log(dog.name);
+dog.sayLegs(); 
+
+// Constructors -  functions that create new objects. They define properties and behaviors that will belong to the new object. Think of them as a blueprint for the creation of new objects.
+function Bird() {
+  this.name = "Albert";
+  this.color = "blue";
+  this.numLegs = 2;
+}
+
+let blueBird = new Bird(); // Create new instance of Bird, has all its properties 
+
+function Dog(name, color) {                           // Use parameters to create new instances easier 
+  this.name = name;
+  this.color = color;
+  Dog.prototype.numLegs = 4;                          // This is same for all instances so use prototype to avoid having it copied over and over 
+}
+
+Dog.prototype = {                                     // Declare all prototypes at once 
+  constructor: Dog, // Define the constructor property to avoid erasing it
+  numLegs: 4,
+  eat: function() {
+    console.log("nom nom nom");
+  },
+  describe: function() {
+    console.log("My name is " + this.name);
+  }
+};
+
+let terrier = new Dog("Mutley", "grey");
+
+function House(numBedrooms) { 
+  this.numBedrooms = numBedrooms;
+}
+
+var myHouse = new House(5); 
+myHouse instanceof House;                 // Check if instance of anoher Object
+
+let beagle = new Dog("Snoopy");
+Dog.prototype.isPrototypeOf(beagle);      // Check if Protype of another Object
+
+// Use Inheritance to avoid repeating code 
+function Animal() { };
+
+Animal.prototype = {
+  constructor: Animal,
+  describe: function() {
+    console.log("My name is " + this.name);
+  }
+};
+
+let dog = Object.create(Animal.prototype); 
+dog.eat(); // Should print "nom nom nom"
+
+
+Bird.prototype = Object.create(Animal.prototype);
+let duck = new Bird("Donald");
+duck.eat(); // prints "nom nom nom"
+
+//  Add method after Inheritance 
+Dog.prototype = Object.create(Animal.prototype);
+Dog.prototype.constructor = Dog;
+Dog.prototype.bark = function() {
+    console.log("Woof woof!");
+};
+
+function Bird() {
+  let weight = 15;                  // private property
+
+ this.getWeight = function() {       // publicly available method that a bird object can use
+   return weight;
+ };  
+}
+
+ // Immediately Invoked Function Expression (IIFE) - Execute a function as soon as it is declared
