@@ -22,6 +22,16 @@ a -= b // Minus the value
 a *= b // Multiply the value 
 a /= b // Divide the value 
 
+// Comparsion Operators
+// == Equal to
+// ==== Equal Value and Equal Type
+// != Not Equal
+// !== Not Equal Value or Not Equal Type
+// > Greater than
+// < Less than
+// >= Greater than or Equal to
+// <= Less than or Equal to 
+
 
 // Escape Sequences in Strings
 // --    \'	single quote
@@ -626,7 +636,23 @@ obj.newProp = "Test"; // will be ignored. Mutation not allowed
 console.log(obj);
 // { name: "FreeCodeCamp", review:"Awesome"}
 
-// Anononymous Functions
+// Anononymous Functions - Functions that have no names 
+
+function() {
+  alert('hello');
+}
+
+// Generally use with an event handler
+
+myButton.onclick = function() {
+  alert('hello');
+}
+
+// Can also assign to be value of a variable 
+var myGreeting = function() {
+  alert('hello');
+}
+
 const myFunc = () => {
   const myVar = "value";
   return myVar;
@@ -979,5 +1005,3 @@ function Bird() {
    return weight;
  };  
 }
-
- // Immediately Invoked Function Expression (IIFE) - Execute a function as soon as it is declared
