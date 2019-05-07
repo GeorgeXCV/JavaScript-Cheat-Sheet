@@ -80,6 +80,8 @@ function functionWithArgs(one, two) {
   timesFive(5);
   timesFive(2);
 
+
+
   // If Statements 
 
   function trueOrFalse(wasThatTrue) {
@@ -249,6 +251,33 @@ function abTest(a, b) {
    } 
   
   abTest(2,2);
+
+    
+// Assertion - Check if true, error thrown if evaluates to 0 or false  
+assert.equal(7 + 1, 8);
+assert.equal('a' + 'b', 'ab');
+
+// Undefined - “not initialized” (e.g. a variable) or “not existing” (e.g. a property of an object).
+let myVar;
+assert.equal(myVar, undefined);
+
+function func(x) {
+  return x;
+}
+assert.equal(func(), undefined);
+
+const obj = {};
+assert.equal(obj.unknownProp, undefined);
+
+
+// Null -  means “the intentional absence of any object value” (a quote from the language specification).
+
+// The prototype of an object is either an object or, at the end of a chain of prototypes, null. Object.prototype does not have a prototype:
+Object.getPrototypeOf(Object.prototype)
+
+// If you match a regular expression (such as /a/) against a string (such as 'x'), you either get an object with matching data (if matching was successful) or null (if matching failed):
+/a/.exec('x')
+
   
 // Switch Statements 
 function caseInSwitch(val) {
@@ -1005,3 +1034,17 @@ function Bird() {
    return weight;
  };  
 }
+
+// Unit Tests 
+
+// Code to Test
+export function id(x) {
+  return x;
+}
+
+import {strict as assert} from 'assert'; // Import the assertion library.
+import {id} from './id.js'; // Import the function to test 
+
+test('My test', () => { // Define a test by calling function test() - First parameter: Name of test. - 
+  assert.equal(id('abc'), 'abc'); // Second Parameter: The test code (provided via an arrow function with 0 parameters).
+});
