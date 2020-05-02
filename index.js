@@ -965,6 +965,18 @@ console.log(dog.name);
 dog.sayLegs(); 
 
 // Constructors -  functions that create new objects. They define properties and behaviors that will belong to the new object. Think of them as a blueprint for the creation of new objects.
+class Polygon {
+  constructor() {
+    this.name = "Polygon";
+  }
+}
+
+const poly1 = new Polygon();
+
+console.log(poly1.name);
+// expected output: "Polygon"
+
+
 function Bird() {
   this.name = "Albert";
   this.color = "blue";
