@@ -976,6 +976,21 @@ const poly1 = new Polygon();
 console.log(poly1.name);
 // expected output: "Polygon"
 
+class Person {
+
+  constructor(name) {
+    this.name = name;
+  }
+
+  introduce() {
+    console.log(`Hello, my name is ${this.name}`);
+  }
+
+}
+
+const otto = new Person('Otto');
+
+otto.introduce();
 
 function Bird() {
   this.name = "Albert";
