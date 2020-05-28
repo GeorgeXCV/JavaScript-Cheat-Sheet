@@ -955,6 +955,10 @@ fruits.indexOf('dates') // returns -1
 fruits.indexOf('oranges') // returns 2
 fruits.indexOf('pears') // returns 1, the first index at which the element exists
 
+// Map - Arrays have a map() method that is commonly used for mapping data to other data
+const numbers = [1, 2, 3];
+const doubled = numbers.map(x => x * 2); // [2, 4, 6]
+
 // Objects 
 let dog = {
   name: "Lou",
