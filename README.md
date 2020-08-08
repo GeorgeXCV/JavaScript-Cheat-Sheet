@@ -5,6 +5,8 @@ Update: Converted to ReadMe for easier readability.
 
 ## Table of Contents
 
+- [Call Stack](#call-stack)
+- [Event Loop](#event-loop)
 - [Variables](#variables)
 - [Operators](#operators)
 - [Escape Sequences in Strings](#escape-sequences-in-strings)
@@ -21,6 +23,20 @@ Update: Converted to ReadMe for easier readability.
 - [ES6](#es6)
 - [Test Method](#test-method)
 - [Constructors](#constructors)
+
+## Call Stack
+Javascript is a single threaded single concurrent language, meaning it can handle one task at a time or a piece of code at a time. It has a single call stack which along with other parts like heap, queue constitutes the Javascript Concurrency Model (implemented inside of V8).
+
+**Call Stack** - It’s a data structure which records the function calls, basically where in the program we are. If we call a function to execute, we push something on to the stack, and when we return from a function, we pop off the top of the stack.
+
+**Heap** - Objects are allocated in a heap i.e mostly unstructured region of memory. All the memory allocation to variables and objects happens here.
+
+**Queue** - A JavaScript runtime contains a message queue, which is a list of messages to be processed and the associated callback functions to execute. When the stack has enough capacity, a message is taken out of the queue and processed which consists of calling the associated function (and thus creating an initial stack frame). The message processing ends when the stack becomes empty again. In basic words , these messages are queued in response to external async events(such as a mouse being clicked or receiving the response to an HTTP request), given a callback function has been provided. If, for example a user were to click a button and no callback function was provided — no message would have been enqueued.
+
+## Event Loop
+**Asynchronous callbacks** -  Run some part of code and give it a callback (function) which will execute later. We all must have encounter asynchronous callbacks like any AJAX request using ```$.get(),setTimeout(),setInterval(), Promises, etc.``` Node is all about asynchronous function execution. All these async callbacks doesn’t run immediately and are going to run some time later, so can’t be pushed immediately inside the stack unlike synchronous functions like ```console.log(), mathematical operations.```
+
+Any of the WebAPI pushes the callback onto this queue when it’s done executing. The Event Loop now is responsible for the execution of these callbacks in the queue and pushing it in the stack, when it is empty 4. Event loop basic job is to look both at the stack and the task queue, pushing the first thing on the queue to the stack when it see stack as empty. Each message or callback is processed completely before any other message is processed.
 
 ## Variables
 
