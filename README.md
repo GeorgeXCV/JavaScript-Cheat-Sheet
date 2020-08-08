@@ -7,8 +7,8 @@ Update: Converted to ReadMe for easier readability.
 
 - [Call Stack](#call-stack)
 - [Event Loop](#event-loop)
-- [Value Types and Reference Types](#event-loop)
-
+- [Value Types and Reference Types](#value-types-and-reference-types)
+- [Double Equals and Triple Equals](#double-equals-and-triple-equals)
 - [Variables](#variables)
 - [Operators](#operators)
 - [Escape Sequences in Strings](#escape-sequences-in-strings)
@@ -164,6 +164,24 @@ console.log(alexChanged); // -> { name: 'Alex', age: 25 }
 In this function, we use JSON.stringify to transform the object we’re passed into a string, and then parse it back into an object with JSON.parse. By performing this transformation and storing the result in a new variable, we’ve created a new object. There are other ways to do the same thing such as looping through the original object and assigning each of its properties to a new object, but this way is simplest. The new object has the same properties as the original but it is a distinctly separate object in memory.
 
 When we change the age property on this new object, the original is unaffected. This function is now pure. It can’t affect any object outside its own scope, not even the object that was passed in. The new object needs to be returned and stored in a new variable or else it gets garbage collected once the function completes, as the object is no longer in scope.
+
+## Double Equals and Triple Equals
+When using triple equals === in JavaScript, we are testing for strict equality. This means both the type and the value we are comparing have to be the same.
+
+```javascript
+'hello world' === 'hello world'
+// true (Both Strings, equal values)true === true
+// true (Both Booleans, equal values)
+```
+
+When using double equals in JavaScript we are testing for loose equality. Double equals also performs type coercion. Type coercion means that two values are compared only after attempting to convert them into a common type.
+
+```javascript
+77 == '77'
+// true
+```
+
+The string value of '77' can easily be converted into the number value of 77. Since 77 equals 77, we get our answer of true.
 
 ## Variables
 
