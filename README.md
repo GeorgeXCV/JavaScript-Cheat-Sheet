@@ -7,6 +7,8 @@ Update: Converted to ReadMe for easier readability.
 
 - [Call Stack](#call-stack)
 - [Event Loop](#event-loop)
+- [Value Types and Reference Types](#event-loop)
+
 - [Variables](#variables)
 - [Operators](#operators)
 - [Escape Sequences in Strings](#escape-sequences-in-strings)
@@ -37,6 +39,131 @@ Javascript is a single threaded single concurrent language, meaning it can handl
 **Asynchronous callbacks** -  Run some part of code and give it a callback (function) which will execute later. We all must have encounter asynchronous callbacks like any AJAX request using ```$.get(),setTimeout(),setInterval(), Promises, etc.``` Node is all about asynchronous function execution. All these async callbacks doesn’t run immediately and are going to run some time later, so can’t be pushed immediately inside the stack unlike synchronous functions like ```console.log(), mathematical operations.```
 
 Any of the WebAPI pushes the callback onto this queue when it’s done executing. The Event Loop now is responsible for the execution of these callbacks in the queue and pushing it in the stack, when it is empty. Event loop basic job is to look both at the stack and the task queue, pushing the first thing on the queue to the stack when it see stack as empty. Each message or callback is processed completely before any other message is processed.
+
+## Value Types and Reference Types
+Javascript has 5 data types that are passed by **value:** ```Boolean, null, undefined, String, and Number```. We’ll call these **primitive types**.
+
+Javascript has 3 data types that are passed by reference: ```Array, Function, and Object```. These are all technically Objects, so we’ll refer to them collectively as **Objects**.
+
+### Primitives
+If a primitive type is assigned to a variable, we can think of that variable as containing the primitive value.
+
+```javascript
+var x = 10;
+var y = 'abc';
+var z = null;
+```
+
+When we assign these variables to other variables using =, we **copy** the value to the new variable. They are copied by value.
+
+```javascript
+var x = 10;
+var y = 'abc';var a = x;
+var b = y;console.log(x, y, a, b); // -> 10, 'abc', 10, 'abc'
+```
+Both a and x now contain 10. Both b and y now contain 'abc'. They’re separate, as the values themselves were copied.
+
+Changing one does not change the other. Think of the variables as having no relationship to each other.
+
+```javascript
+var x = 10;
+var y = 'abc';var a = x;
+var b = y;a = 5;
+b = 'def';console.log(x, y, a, b); // -> 10, 'abc', 5, 'def'
+```
+### Objects
+Variables that are assigned a non-primitive value are given a reference to that value. That reference points to the object’s location in memory. The variables don’t actually contain the value.
+
+Objects are created at some location in your computer’s memory. When we write ```arr = []```, we’ve created an array in memory. What the variable arr receives is the address, the location, of that array. The array in memory is what changes. When we use ```arr``` to do something, such as pushing a value, the Javascript engine goes to the location of ```arr``` in memory and works with the information stored there.
+
+### Assigning by Reference
+When a reference type value, an object, is copied to another variable using =, the address of that value is what’s actually copied over as if it were a primitive. ***Objects are copied by reference*** instead of by value.
+
+```javascript
+var reference = [1];
+var refCopy = reference;
+```
+
+Each variable now contains a reference to the same array. That means that if we alter reference, refCopy will see those changes:
+
+```javascript
+reference.push(2);
+console.log(reference, refCopy); // -> [1, 2], [1, 2]
+```
+
+### Reassigning a Reference
+Reassigning a reference variable replaces the old reference.
+
+```javascript
+var obj = { first: 'reference' };
+obj = { second: 'ref2' }
+```
+The address stored in ```obj``` changes. The first object is still present in memory, and so is the next object.
+
+When there are no references to an object remaining, the Javascript engine can perform garbage collection. This just means that the programmer has lost all references to the object and can’t use the object any more, so the engine can go ahead and safely delete it from memory. In this case, the object ```{ first: 'reference' }``` is no longer accessible and is available to the engine for garbage collection.
+
+### Passing Parameters through Functions
+When we pass primitive values into a function, the function copies the values into its parameters. It’s effectively the same as using =
+
+```javascript
+var hundred = 100;
+var two = 2;function multiply(x, y) {
+    // PAUSE
+    return x * y;
+}
+
+var twoHundred = multiply(hundred, two);
+```
+
+In the example above, we give ```hundred``` the value ```100```. When we pass it into ```multiply```, the variable ```x``` gets that value, ```100```. The value is copied over as if we used an ```=``` assignment. Again, the value of ```hundred``` is not affected. 
+
+### Pure Functions
+We refer to functions that don’t affect anything in the outside scope as pure functions. As long as a function only takes primitive values as parameters and doesn’t use any variables in its surrounding scope, it is automatically pure, as it can’t affect anything in the outside scope. All variables created inside are garbage-collected as soon as the function returns.
+
+A function that takes in an Object, however, can mutate the state of its surrounding scope. If a function takes in an array reference and alters the array that it points to, perhaps by pushing to it, variables in the surrounding scope that reference that array see that change. After the function returns, the changes it makes persist in the outer scope. This can cause undesired side effects that can be difficult to track down.
+
+Many native array functions, including ```Array.map``` and ```Array.filter```, are therefore written as pure functions. They take in an array reference and internally, they copy the array and work with the copy instead of the original. This makes it so the original is untouched, the outer scope is unaffected, and we’re returned a reference to a brand new array.
+
+Impure Function:
+
+```javascript
+function changeAgeImpure(person) {
+    person.age = 25;
+    return person;
+}
+
+var alex = {
+    name: 'Alex',
+    age: 30
+};
+
+var changedAlex = changeAgeImpure(alex);console.log(alex); // -> { name: 'Alex', age: 25 }
+console.log(changedAlex); // -> { name: 'Alex', age: 25 }
+```
+
+This impure function takes in an object and changes the property age on that object to be 25. Because it acts on the reference it was given, it directly changes the object alex. Note that when it returns the person object, it is returning the exact same object that was passed in. alex and alexChanged contain the same reference. It’s redundant to return the person variable and to store the reference in a new variable.
+
+Pure Function:
+
+```javascript
+function changeAgePure(person) {
+    var newPersonObj = JSON.parse(JSON.stringify(person));
+    newPersonObj.age = 25;
+    return newPersonObj;
+}
+
+var alex = {
+    name: 'Alex',
+    age: 30
+};
+
+var alexChanged = changeAgePure(alex);console.log(alex); // -> { name: 'Alex', age: 30 }
+console.log(alexChanged); // -> { name: 'Alex', age: 25 }
+```
+
+In this function, we use JSON.stringify to transform the object we’re passed into a string, and then parse it back into an object with JSON.parse. By performing this transformation and storing the result in a new variable, we’ve created a new object. There are other ways to do the same thing such as looping through the original object and assigning each of its properties to a new object, but this way is simplest. The new object has the same properties as the original but it is a distinctly separate object in memory.
+
+When we change the age property on this new object, the original is unaffected. This function is now pure. It can’t affect any object outside its own scope, not even the object that was passed in. The new object needs to be returned and stored in a new variable or else it gets garbage collected once the function completes, as the object is no longer in scope.
 
 ## Variables
 
