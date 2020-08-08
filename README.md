@@ -36,7 +36,7 @@ Javascript is a single threaded single concurrent language, meaning it can handl
 ## Event Loop
 **Asynchronous callbacks** -  Run some part of code and give it a callback (function) which will execute later. We all must have encounter asynchronous callbacks like any AJAX request using ```$.get(),setTimeout(),setInterval(), Promises, etc.``` Node is all about asynchronous function execution. All these async callbacks doesn’t run immediately and are going to run some time later, so can’t be pushed immediately inside the stack unlike synchronous functions like ```console.log(), mathematical operations.```
 
-Any of the WebAPI pushes the callback onto this queue when it’s done executing. The Event Loop now is responsible for the execution of these callbacks in the queue and pushing it in the stack, when it is empty 4. Event loop basic job is to look both at the stack and the task queue, pushing the first thing on the queue to the stack when it see stack as empty. Each message or callback is processed completely before any other message is processed.
+Any of the WebAPI pushes the callback onto this queue when it’s done executing. The Event Loop now is responsible for the execution of these callbacks in the queue and pushing it in the stack, when it is empty. Event loop basic job is to look both at the stack and the task queue, pushing the first thing on the queue to the stack when it see stack as empty. Each message or callback is processed completely before any other message is processed.
 
 ## Variables
 
