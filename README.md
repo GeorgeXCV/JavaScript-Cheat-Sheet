@@ -289,7 +289,12 @@ const doubled = numbers.map(x => x * 2); // [2, 4, 6]
 ```
 
 ## Functions 
-> Does not require Return statement - Return value undefined if not stated
+> Functions are executed when they are called. This is known as **invoking** a function.
+
+> Functions always return a value. If no return value is specified, the function will return undefined by default.
+
+> Values can be passed into functions and used within the function. The name of the value is called a parameter. The actual value itself is called an argument.
+
 ```javascript
 function reusableFunction() {
     console.log("Hi World");
@@ -311,7 +316,25 @@ function functionWithArgs(one, two) {
   timesFive(5);
   timesFive(2);
   ```
-  
+
+### Function Expressions
+A Function Expressions defines a named or anonymous function. An anonymous function is a function that has no name. Function Expressions are not hoisted, and therefore cannot be used before they are defined. In the example below, we are setting the anonymous function object equal to a variable.
+
+```javascript
+let name = function(parameters){
+  statements
+}
+```
+
+### Arrow Function Expression
+An Arrow Function Expression is a shorter syntax for writing function expressions. Arrow functions do not create their own ```this``` value.
+
+```javascript
+let name = (parameters) => {
+  statements
+}
+```
+
 ## If Statements 
 ```javascript
   function trueOrFalse(wasThatTrue) {
