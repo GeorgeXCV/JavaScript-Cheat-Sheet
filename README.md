@@ -19,6 +19,7 @@ Update: Converted to ReadMe for easier readability.
 - [Object.assign()](#objectassign)
 - [Set](#set)
 - [Promise](#promise)
+- [async/await](#asyncawait)
 - [Variables](#variables)
 - [Operators](#operators)
 - [Escape Sequences in Strings](#escape-sequences-in-strings)
@@ -392,6 +393,78 @@ var askMum = function () {
 
 askMum();
 ```
+
+## async/await
+
+### Async functions
+
+The word “async” before a function means one simple thing: a function always returns a promise. Other values are wrapped in a resolved promise automatically.
+
+For instance, this function returns a resolved promise with the result of 1
+
+```javascript
+async function f() {
+  return 1;
+}
+
+f().then(alert); // 1
+```
+
+#### Await
+
+The keyword await makes JavaScript wait until that promise settles and returns its result.
+
+Here’s an example with a promise that resolves in 1 second:
+
+```javascript
+async function f() {
+
+  let promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("done!"), 1000)
+  });
+
+  let result = await promise; // wait until the promise resolves (*)
+
+  alert(result); // "done!"
+}
+
+f();
+```
+
+The function execution “pauses” at the line (*) and resumes when the promise settles, with result becoming its result. So the code above shows “done!” in one second.
+
+Let’s emphasize: await literally suspends the function execution until the promise settles, and then resumes it with the promise result. That doesn’t cost any CPU resources, because the JavaScript engine can do other jobs in the meantime: execute other scripts, handle events, etc.
+
+We can’t use await in top-level code. For example, this will not work:
+
+```javascript
+// syntax error in top-level code
+let response = await fetch('/article/promise-chaining/user.json');
+let user = await response.json();
+```
+
+But we can wrap it into an anonymous async function, like this:
+
+```javascript
+(async () => {
+  let response = await fetch('/article/promise-chaining/user.json');
+  let user = await response.json();
+  ...
+})();
+```
+
+When we need to wait for multiple promises, we can wrap them in Promise.all and then await:
+
+```javascript
+// wait for the array of results
+let results = await Promise.all([
+  fetch(url1),
+  fetch(url2),
+  ...
+]);
+```
+
+In the case of an error, it propagates as usual, from the failed promise to Promise.all, and then becomes an exception that we can catch using try..catch around the call.
 
 ## Variables
 
