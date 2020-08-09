@@ -12,6 +12,9 @@ Update: Converted to ReadMe for easier readability.
 - [call()](#call)
 - [apply()](#apply)
 - [bind()](#bind)
+- [map()](#map)
+- [filter()](#filter)
+- [reduce()](#reduce)
 - [Object.create()](#objectcreate)
 - [Object.assign()](#objectassign)
 - [Variables](#variables)
@@ -244,6 +247,30 @@ const cylinder = {
 var customVolume = cylinder.volume.bind({pi: 3.14159}); // This will not be instantly called
 // In future or after some event is triggered.
 customVolume(2,4); // Now pi is 3.14159
+```
+
+## map()
+The map() method creates a new array with the results of calling a provided function on every element in the calling array.
+
+```javascript
+const numbers = [2, 4, 8, 10];
+const halves = numbers.map(x => x / 2);// halves is [1, 2, 4, 5]
+```
+
+## filter()
+The filter() method creates a new array with all elements that pass the test implemented by the provided function.
+
+```javascript
+const words = ["spray", "limit", "elite", "exuberant", "destruction", "present"];
+
+const longWords = words.filter(word => word.length > 6);// longWords is ["exuberant", "destruction", "present"]
+```
+
+## reduce()
+The reduce() method applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.
+
+```javascript
+const total = [0, 1, 2, 3].reduce((sum, value) => sum + value, 1);// total is 7
 ```
 
 ## Object.create()
