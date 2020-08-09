@@ -18,6 +18,7 @@ Update: Converted to ReadMe for easier readability.
 - [Object.create()](#objectcreate)
 - [Object.assign()](#objectassign)
 - [Set](#set)
+- [Promise](#promise)
 - [Variables](#variables)
 - [Operators](#operators)
 - [Escape Sequences in Strings](#escape-sequences-in-strings)
@@ -337,6 +338,60 @@ Second, a Set keeps its data organized to make one particular operation fast: me
     true
 ```
 
+## Promise
+The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
+
+A Promise is in one of these states:
+
+    pending: initial state, neither fulfilled nor rejected.
+    fulfilled: meaning that the operation completed successfully.
+    rejected: meaning that the operation failed.
+
+```javascript
+var isMumHappy = true;
+
+// Promise
+var willIGetNewPhone = new Promise(
+    function (resolve, reject) {
+        if (isMumHappy) {
+            var phone = {
+                brand: 'Apple',
+                color: 'black'
+            };
+            resolve(phone); // fulfilled
+        } else {
+            var reason = new Error('mum is not happy');
+            reject(reason); // reject
+        }
+
+    }
+);
+
+// 2nd promise
+var showOff = function (phone) {
+    var message = 'Hey friend, I have a new ' +
+                phone.color + ' ' + phone.brand + ' phone';
+
+    return Promise.resolve(message);
+};
+
+// call our promise
+var askMum = function () {
+    willIGetNewPhone
+    .then(showOff) // chain it here
+    .then(function (fulfilled) {
+            console.log(fulfilled);
+            // output: 'Hey friend, I have a new black iPhone.'
+        })
+        .catch(function (error) {
+            // oops, mum don't buy it
+            console.log(error.message);
+            // output: 'mum is not happy'
+        });
+};
+
+askMum();
+```
 
 ## Variables
 
