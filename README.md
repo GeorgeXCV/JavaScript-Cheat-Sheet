@@ -9,6 +9,9 @@ Update: Converted to ReadMe for easier readability.
 - [Event Loop](#event-loop)
 - [Value Types and Reference Types](#value-types-and-reference-types)
 - [Double Equals and Triple Equals](#double-equals-and-triple-equals)
+- [call()](#call)
+- [apply()](#apply)
+- [bind()](#bind)
 - [Variables](#variables)
 - [Operators](#operators)
 - [Escape Sequences in Strings](#escape-sequences-in-strings)
@@ -184,6 +187,62 @@ When using double equals in JavaScript we are testing for loose equality. Double
 ```
 
 The string value of '77' can easily be converted into the number value of 77. Since 77 equals 77, we get our answer of true.
+
+## call()
+It takes in two arguments
+
+    Context (object)
+    Arguments
+
+A context is an object that replaces the this keyword in the area function. And then arguments are passed as function arguments.
+
+```javascript
+const calcArea = {
+  pi: 3.14,
+  area: function(r) {
+    return this.pi * r * r;
+  }
+}
+
+calcArea.area(4); // prints 50.24
+
+calcArea.area.call({pi: 3.14159}, 4)
+
+50.26544
+```
+
+## apply()
+Apply is exactly the same as call(), except function arguments are passed as an array or you can use an Array object (new Array(2, 4)).
+
+```javascript
+const cylinder = {
+    pi: 3.14,
+    volume: function(r, h) {
+        return this.pi * r * r * h;
+    }
+};
+
+cylinder.volume.call({pi: 3.14159}, 2, 4);// 50.26544
+
+cylinder.volume.apply({pi: 3.14159}, [2, 4]);// 50.26544
+```
+
+## bind()
+It allows us to input context into a function which returns a new function with an updated context. Basically it means bind() attaches a new this to a given function. Unlike call() and apply(), bind() function is not executed immediately but later when required. bind() is useful while working with JavaScript events.
+
+```javascript
+const cylinder = {
+    pi: 3.14,
+    volume: function(r, h) {
+        return this.pi * r * r * h;
+    }
+};
+
+
+var customVolume = cylinder.volume.bind({pi: 3.14159}); // This will not be instantly called
+// In future or after some event is triggered.
+customVolume(2,4); // Now pi is 3.14159
+```
 
 ## Variables
 
