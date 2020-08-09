@@ -12,6 +12,8 @@ Update: Converted to ReadMe for easier readability.
 - [call()](#call)
 - [apply()](#apply)
 - [bind()](#bind)
+- [Object.create()](#objectcreate)
+- [Object.assign()](#objectassign)
 - [Variables](#variables)
 - [Operators](#operators)
 - [Escape Sequences in Strings](#escape-sequences-in-strings)
@@ -242,6 +244,42 @@ const cylinder = {
 var customVolume = cylinder.volume.bind({pi: 3.14159}); // This will not be instantly called
 // In future or after some event is triggered.
 customVolume(2,4); // Now pi is 3.14159
+```
+
+## Object.create()
+The Object.create() method creates a new object, using an existing object as the prototype of the newly created object.
+
+```javascript
+const person = {
+  isHuman: false,
+  printIntroduction: function() {
+    console.log(`My name is ${this.name}. Am I human? ${this.isHuman}`);
+  }
+};
+
+const me = Object.create(person);
+
+me.name = 'Matthew'; // "name" is a property set on "me", but not on "person"
+me.isHuman = true; // inherited properties can be overwritten
+
+me.printIntroduction();
+// expected output: "My name is Matthew. Am I human? true"
+```
+
+## Object.assign()
+The Object.assign() method copies all enumerable own properties from one or more source objects to a target object. It returns the target object.
+
+```javascript
+const target = { a: 1, b: 2 };
+const source = { b: 4, c: 5 };
+
+const returnedTarget = Object.assign(target, source);
+
+console.log(target);
+// expected output: Object { a: 1, b: 4, c: 5 }
+
+console.log(returnedTarget);
+// expected output: Object { a: 1, b: 4, c: 5 }
 ```
 
 ## Variables
