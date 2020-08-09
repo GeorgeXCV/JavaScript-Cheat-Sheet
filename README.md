@@ -7,6 +7,18 @@ Update: Converted to ReadMe for easier readability.
 
 - [Call Stack](#call-stack)
 - [Event Loop](#event-loop)
+- [Functions](#functions)
+- [Variables](#variables)
+- [Operators](#operators)
+- [Escape Sequences in Strings](#escape-sequences-in-strings)
+- [Arrays](#arrays)
+- [If Statements](#if-statements)
+- [Assertion](#assertion)
+- [Undefined](#undefined)
+- [Switch Statements](#switch-statements)
+- [Objects](#objects)
+- [Loops](#loops)
+- [Numbers](#numbers)
 - [Value Types and Reference Types](#value-types-and-reference-types)
 - [Double Equals and Triple Equals](#double-equals-and-triple-equals)
 - [call()](#call)
@@ -20,19 +32,6 @@ Update: Converted to ReadMe for easier readability.
 - [Set](#set)
 - [Promise](#promise)
 - [async/await](#asyncawait)
-- [Variables](#variables)
-- [Operators](#operators)
-- [Escape Sequences in Strings](#escape-sequences-in-strings)
-- [Arrays](#arrays)
-- [Functions](#functions)
-- [If Statements](#if-statements)
-- [Assertion](#assertion)
-- [Undefined](#undefined)
-
-- [Switch Statements](#switch-statements)
-- [Objects](#objects)
-- [Loops](#loops)
-- [Numbers](#numbers)
 - [ES6](#es6)
 - [Test Method](#test-method)
 - [Constructors](#constructors)
@@ -178,293 +177,52 @@ In this function, we use JSON.stringify to transform the object we’re passed i
 
 When we change the age property on this new object, the original is unaffected. This function is now pure. It can’t affect any object outside its own scope, not even the object that was passed in. The new object needs to be returned and stored in a new variable or else it gets garbage collected once the function completes, as the object is no longer in scope.
 
-## Double Equals and Triple Equals
-When using triple equals === in JavaScript, we are testing for strict equality. This means both the type and the value we are comparing have to be the same.
+## Functions 
+> Functions are executed when they are called. This is known as **invoking** a function.
+
+> Functions always return a value. If no return value is specified, the function will return undefined by default.
+
+> Values can be passed into functions and used within the function. The name of the value is called a parameter. The actual value itself is called an argument.
 
 ```javascript
-'hello world' === 'hello world'
-// true (Both Strings, equal values)true === true
-// true (Both Booleans, equal values)
-```
+function reusableFunction() {
+    console.log("Hi World");
+}
 
-When using double equals in JavaScript we are testing for loose equality. Double equals also performs type coercion. Type coercion means that two values are compared only after attempting to convert them into a common type.
+reusableFunction();
 
-```javascript
-77 == '77'
-// true
-```
-
-The string value of '77' can easily be converted into the number value of 77. Since 77 equals 77, we get our answer of true.
-
-## call()
-It takes in two arguments
-
-    Context (object)
-    Arguments
-
-A context is an object that replaces the this keyword in the area function. And then arguments are passed as function arguments.
-
-```javascript
-const calcArea = {
-  pi: 3.14,
-  area: function(r) {
-    return this.pi * r * r;
+function functionWithArgs(one, two) {
+    console.log(one + two);
   }
-}
+  
+  functionWithArgs(1,2);
+  functionWithArgs(7,9);
 
-calcArea.area(4); // prints 50.24
-
-calcArea.area.call({pi: 3.14159}, 4)
-
-50.26544
-```
-
-## apply()
-Apply is exactly the same as call(), except function arguments are passed as an array or you can use an Array object (new Array(2, 4)).
-
-```javascript
-const cylinder = {
-    pi: 3.14,
-    volume: function(r, h) {
-        return this.pi * r * r * h;
-    }
-};
-
-cylinder.volume.call({pi: 3.14159}, 2, 4);// 50.26544
-
-cylinder.volume.apply({pi: 3.14159}, [2, 4]);// 50.26544
-```
-
-## bind()
-It allows us to input context into a function which returns a new function with an updated context. Basically it means bind() attaches a new this to a given function. Unlike call() and apply(), bind() function is not executed immediately but later when required. bind() is useful while working with JavaScript events.
-
-```javascript
-const cylinder = {
-    pi: 3.14,
-    volume: function(r, h) {
-        return this.pi * r * r * h;
-    }
-};
-
-
-var customVolume = cylinder.volume.bind({pi: 3.14159}); // This will not be instantly called
-// In future or after some event is triggered.
-customVolume(2,4); // Now pi is 3.14159
-```
-
-## map()
-The map() method creates a new array with the results of calling a provided function on every element in the calling array.
-
-```javascript
-const numbers = [2, 4, 8, 10];
-const halves = numbers.map(x => x / 2);// halves is [1, 2, 4, 5]
-```
-
-## filter()
-The filter() method creates a new array with all elements that pass the test implemented by the provided function.
-
-```javascript
-const words = ["spray", "limit", "elite", "exuberant", "destruction", "present"];
-
-const longWords = words.filter(word => word.length > 6);// longWords is ["exuberant", "destruction", "present"]
-```
-
-## reduce()
-The reduce() method applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.
-
-```javascript
-const total = [0, 1, 2, 3].reduce((sum, value) => sum + value, 1);// total is 7
-```
-
-## Object.create()
-The Object.create() method creates a new object, using an existing object as the prototype of the newly created object.
-
-```javascript
-const person = {
-  isHuman: false,
-  printIntroduction: function() {
-    console.log(`My name is ${this.name}. Am I human? ${this.isHuman}`);
+  function timesFive(num) {
+    return num * 5;
   }
-};
+  
+  timesFive(5);
+  timesFive(2);
+  ```
 
-const me = Object.create(person);
-
-me.name = 'Matthew'; // "name" is a property set on "me", but not on "person"
-me.isHuman = true; // inherited properties can be overwritten
-
-me.printIntroduction();
-// expected output: "My name is Matthew. Am I human? true"
-```
-
-## Object.assign()
-The Object.assign() method copies all enumerable own properties from one or more source objects to a target object. It returns the target object.
+### Function Expressions
+A Function Expressions defines a named or anonymous function. An anonymous function is a function that has no name. Function Expressions are not hoisted, and therefore cannot be used before they are defined. In the example below, we are setting the anonymous function object equal to a variable.
 
 ```javascript
-const target = { a: 1, b: 2 };
-const source = { b: 4, c: 5 };
-
-const returnedTarget = Object.assign(target, source);
-
-console.log(target);
-// expected output: Object { a: 1, b: 4, c: 5 }
-
-console.log(returnedTarget);
-// expected output: Object { a: 1, b: 4, c: 5 }
-```
-
-## Set
-A Set is a collection of values. It’s mutable, so your program can add and remove values as it goes. So far, this is just like an array. But there are as many differences between sets and arrays as there are similarities.
-
-First, unlike an array, a set never contains the same value twice. If you try to add a value to a set that’s already in there, nothing happens.
-
-```javascript
- var desserts = new Set("🍪🍦🍧🍩");
-> desserts.size
-    4
-> desserts.add("🍪");
-    Set [ "🍪", "🍦", "🍧", "🍩" ]
-> desserts.size
-    4
-```
-
-Set can contain any type of JS value. Just as with strings, adding the same object or number more than once has no added effect.
-
-Second, a Set keeps its data organized to make one particular operation fast: membership testing.
-
-```javascript
-> // Check whether "zythum" is a word.
-> arrayOfWords.indexOf("zythum") !== -1  // slow
-    true
-> setOfWords.has("zythum")               // fast
-    true
-```
-
-## Promise
-The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
-
-A Promise is in one of these states:
-
-    pending: initial state, neither fulfilled nor rejected.
-    fulfilled: meaning that the operation completed successfully.
-    rejected: meaning that the operation failed.
-
-```javascript
-var isMumHappy = true;
-
-// Promise
-var willIGetNewPhone = new Promise(
-    function (resolve, reject) {
-        if (isMumHappy) {
-            var phone = {
-                brand: 'Apple',
-                color: 'black'
-            };
-            resolve(phone); // fulfilled
-        } else {
-            var reason = new Error('mum is not happy');
-            reject(reason); // reject
-        }
-
-    }
-);
-
-// 2nd promise
-var showOff = function (phone) {
-    var message = 'Hey friend, I have a new ' +
-                phone.color + ' ' + phone.brand + ' phone';
-
-    return Promise.resolve(message);
-};
-
-// call our promise
-var askMum = function () {
-    willIGetNewPhone
-    .then(showOff) // chain it here
-    .then(function (fulfilled) {
-            console.log(fulfilled);
-            // output: 'Hey friend, I have a new black iPhone.'
-        })
-        .catch(function (error) {
-            // oops, mum don't buy it
-            console.log(error.message);
-            // output: 'mum is not happy'
-        });
-};
-
-askMum();
-```
-
-## async/await
-
-### Async functions
-
-The word “async” before a function means one simple thing: a function always returns a promise. Other values are wrapped in a resolved promise automatically.
-
-For instance, this function returns a resolved promise with the result of 1
-
-```javascript
-async function f() {
-  return 1;
+let name = function(parameters){
+  statements
 }
-
-f().then(alert); // 1
 ```
 
-#### Await
-
-The keyword await makes JavaScript wait until that promise settles and returns its result.
-
-Here’s an example with a promise that resolves in 1 second:
+### Arrow Function Expression
+An Arrow Function Expression is a shorter syntax for writing function expressions. Arrow functions do not create their own ```this``` value.
 
 ```javascript
-async function f() {
-
-  let promise = new Promise((resolve, reject) => {
-    setTimeout(() => resolve("done!"), 1000)
-  });
-
-  let result = await promise; // wait until the promise resolves (*)
-
-  alert(result); // "done!"
+let name = (parameters) => {
+  statements
 }
-
-f();
 ```
-
-The function execution “pauses” at the line (*) and resumes when the promise settles, with result becoming its result. So the code above shows “done!” in one second.
-
-Let’s emphasize: await literally suspends the function execution until the promise settles, and then resumes it with the promise result. That doesn’t cost any CPU resources, because the JavaScript engine can do other jobs in the meantime: execute other scripts, handle events, etc.
-
-We can’t use await in top-level code. For example, this will not work:
-
-```javascript
-// syntax error in top-level code
-let response = await fetch('/article/promise-chaining/user.json');
-let user = await response.json();
-```
-
-But we can wrap it into an anonymous async function, like this:
-
-```javascript
-(async () => {
-  let response = await fetch('/article/promise-chaining/user.json');
-  let user = await response.json();
-  ...
-})();
-```
-
-When we need to wait for multiple promises, we can wrap them in Promise.all and then await:
-
-```javascript
-// wait for the array of results
-let results = await Promise.all([
-  fetch(url1),
-  fetch(url2),
-  ...
-]);
-```
-
-In the case of an error, it propagates as usual, from the failed promise to Promise.all, and then becomes an exception that we can catch using try..catch around the call.
 
 ## Variables
 
@@ -569,53 +327,6 @@ fruits.indexOf('pears') // returns 1, the first index at which the element exist
 const numbers = [1, 2, 3];
 const doubled = numbers.map(x => x * 2); // [2, 4, 6]
 
-```
-
-## Functions 
-> Functions are executed when they are called. This is known as **invoking** a function.
-
-> Functions always return a value. If no return value is specified, the function will return undefined by default.
-
-> Values can be passed into functions and used within the function. The name of the value is called a parameter. The actual value itself is called an argument.
-
-```javascript
-function reusableFunction() {
-    console.log("Hi World");
-}
-
-reusableFunction();
-
-function functionWithArgs(one, two) {
-    console.log(one + two);
-  }
-  
-  functionWithArgs(1,2);
-  functionWithArgs(7,9);
-
-  function timesFive(num) {
-    return num * 5;
-  }
-  
-  timesFive(5);
-  timesFive(2);
-  ```
-
-### Function Expressions
-A Function Expressions defines a named or anonymous function. An anonymous function is a function that has no name. Function Expressions are not hoisted, and therefore cannot be used before they are defined. In the example below, we are setting the anonymous function object equal to a variable.
-
-```javascript
-let name = function(parameters){
-  statements
-}
-```
-
-### Arrow Function Expression
-An Arrow Function Expression is a shorter syntax for writing function expressions. Arrow functions do not create their own ```this``` value.
-
-```javascript
-let name = (parameters) => {
-  statements
-}
 ```
 
 ## If Statements 
@@ -1155,6 +866,293 @@ function convertToInteger(str) {
 convertToInteger("56");
 ```
 
+## Double Equals and Triple Equals
+When using triple equals === in JavaScript, we are testing for strict equality. This means both the type and the value we are comparing have to be the same.
+
+```javascript
+'hello world' === 'hello world'
+// true (Both Strings, equal values)true === true
+// true (Both Booleans, equal values)
+```
+
+When using double equals in JavaScript we are testing for loose equality. Double equals also performs type coercion. Type coercion means that two values are compared only after attempting to convert them into a common type.
+
+```javascript
+77 == '77'
+// true
+```
+
+The string value of '77' can easily be converted into the number value of 77. Since 77 equals 77, we get our answer of true.
+
+## call()
+It takes in two arguments
+
+    Context (object)
+    Arguments
+
+A context is an object that replaces the this keyword in the area function. And then arguments are passed as function arguments.
+
+```javascript
+const calcArea = {
+  pi: 3.14,
+  area: function(r) {
+    return this.pi * r * r;
+  }
+}
+
+calcArea.area(4); // prints 50.24
+
+calcArea.area.call({pi: 3.14159}, 4)
+
+50.26544
+```
+
+## apply()
+Apply is exactly the same as call(), except function arguments are passed as an array or you can use an Array object (new Array(2, 4)).
+
+```javascript
+const cylinder = {
+    pi: 3.14,
+    volume: function(r, h) {
+        return this.pi * r * r * h;
+    }
+};
+
+cylinder.volume.call({pi: 3.14159}, 2, 4);// 50.26544
+
+cylinder.volume.apply({pi: 3.14159}, [2, 4]);// 50.26544
+```
+
+## bind()
+It allows us to input context into a function which returns a new function with an updated context. Basically it means bind() attaches a new this to a given function. Unlike call() and apply(), bind() function is not executed immediately but later when required. bind() is useful while working with JavaScript events.
+
+```javascript
+const cylinder = {
+    pi: 3.14,
+    volume: function(r, h) {
+        return this.pi * r * r * h;
+    }
+};
+
+
+var customVolume = cylinder.volume.bind({pi: 3.14159}); // This will not be instantly called
+// In future or after some event is triggered.
+customVolume(2,4); // Now pi is 3.14159
+```
+
+## map()
+The map() method creates a new array with the results of calling a provided function on every element in the calling array.
+
+```javascript
+const numbers = [2, 4, 8, 10];
+const halves = numbers.map(x => x / 2);// halves is [1, 2, 4, 5]
+```
+
+## filter()
+The filter() method creates a new array with all elements that pass the test implemented by the provided function.
+
+```javascript
+const words = ["spray", "limit", "elite", "exuberant", "destruction", "present"];
+
+const longWords = words.filter(word => word.length > 6);// longWords is ["exuberant", "destruction", "present"]
+```
+
+## reduce()
+The reduce() method applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.
+
+```javascript
+const total = [0, 1, 2, 3].reduce((sum, value) => sum + value, 1);// total is 7
+```
+
+## Object.create()
+The Object.create() method creates a new object, using an existing object as the prototype of the newly created object.
+
+```javascript
+const person = {
+  isHuman: false,
+  printIntroduction: function() {
+    console.log(`My name is ${this.name}. Am I human? ${this.isHuman}`);
+  }
+};
+
+const me = Object.create(person);
+
+me.name = 'Matthew'; // "name" is a property set on "me", but not on "person"
+me.isHuman = true; // inherited properties can be overwritten
+
+me.printIntroduction();
+// expected output: "My name is Matthew. Am I human? true"
+```
+
+## Object.assign()
+The Object.assign() method copies all enumerable own properties from one or more source objects to a target object. It returns the target object.
+
+```javascript
+const target = { a: 1, b: 2 };
+const source = { b: 4, c: 5 };
+
+const returnedTarget = Object.assign(target, source);
+
+console.log(target);
+// expected output: Object { a: 1, b: 4, c: 5 }
+
+console.log(returnedTarget);
+// expected output: Object { a: 1, b: 4, c: 5 }
+```
+
+## Set
+A Set is a collection of values. It’s mutable, so your program can add and remove values as it goes. So far, this is just like an array. But there are as many differences between sets and arrays as there are similarities.
+
+First, unlike an array, a set never contains the same value twice. If you try to add a value to a set that’s already in there, nothing happens.
+
+```javascript
+ var desserts = new Set("🍪🍦🍧🍩");
+> desserts.size
+    4
+> desserts.add("🍪");
+    Set [ "🍪", "🍦", "🍧", "🍩" ]
+> desserts.size
+    4
+```
+
+Set can contain any type of JS value. Just as with strings, adding the same object or number more than once has no added effect.
+
+Second, a Set keeps its data organized to make one particular operation fast: membership testing.
+
+```javascript
+> // Check whether "zythum" is a word.
+> arrayOfWords.indexOf("zythum") !== -1  // slow
+    true
+> setOfWords.has("zythum")               // fast
+    true
+```
+
+## Promise
+The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
+
+A Promise is in one of these states:
+
+    pending: initial state, neither fulfilled nor rejected.
+    fulfilled: meaning that the operation completed successfully.
+    rejected: meaning that the operation failed.
+
+```javascript
+var isMumHappy = true;
+
+// Promise
+var willIGetNewPhone = new Promise(
+    function (resolve, reject) {
+        if (isMumHappy) {
+            var phone = {
+                brand: 'Apple',
+                color: 'black'
+            };
+            resolve(phone); // fulfilled
+        } else {
+            var reason = new Error('mum is not happy');
+            reject(reason); // reject
+        }
+
+    }
+);
+
+// 2nd promise
+var showOff = function (phone) {
+    var message = 'Hey friend, I have a new ' +
+                phone.color + ' ' + phone.brand + ' phone';
+
+    return Promise.resolve(message);
+};
+
+// call our promise
+var askMum = function () {
+    willIGetNewPhone
+    .then(showOff) // chain it here
+    .then(function (fulfilled) {
+            console.log(fulfilled);
+            // output: 'Hey friend, I have a new black iPhone.'
+        })
+        .catch(function (error) {
+            // oops, mum don't buy it
+            console.log(error.message);
+            // output: 'mum is not happy'
+        });
+};
+
+askMum();
+```
+
+## async/await
+
+### Async functions
+
+The word “async” before a function means one simple thing: a function always returns a promise. Other values are wrapped in a resolved promise automatically.
+
+For instance, this function returns a resolved promise with the result of 1
+
+```javascript
+async function f() {
+  return 1;
+}
+
+f().then(alert); // 1
+```
+
+#### Await
+
+The keyword await makes JavaScript wait until that promise settles and returns its result.
+
+Here’s an example with a promise that resolves in 1 second:
+
+```javascript
+async function f() {
+
+  let promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("done!"), 1000)
+  });
+
+  let result = await promise; // wait until the promise resolves (*)
+
+  alert(result); // "done!"
+}
+
+f();
+```
+
+The function execution “pauses” at the line (*) and resumes when the promise settles, with result becoming its result. So the code above shows “done!” in one second.
+
+Let’s emphasize: await literally suspends the function execution until the promise settles, and then resumes it with the promise result. That doesn’t cost any CPU resources, because the JavaScript engine can do other jobs in the meantime: execute other scripts, handle events, etc.
+
+We can’t use await in top-level code. For example, this will not work:
+
+```javascript
+// syntax error in top-level code
+let response = await fetch('/article/promise-chaining/user.json');
+let user = await response.json();
+```
+
+But we can wrap it into an anonymous async function, like this:
+
+```javascript
+(async () => {
+  let response = await fetch('/article/promise-chaining/user.json');
+  let user = await response.json();
+  ...
+})();
+```
+
+When we need to wait for multiple promises, we can wrap them in Promise.all and then await:
+
+```javascript
+// wait for the array of results
+let results = await Promise.all([
+  fetch(url1),
+  fetch(url2),
+  ...
+]);
+```
+
+In the case of an error, it propagates as usual, from the failed promise to Promise.all, and then becomes an exception that we can catch using try..catch around the call.
 
 ## ES6
 ```javascript
