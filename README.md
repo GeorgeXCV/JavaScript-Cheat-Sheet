@@ -17,6 +17,7 @@ Update: Converted to ReadMe for easier readability.
 - [reduce()](#reduce)
 - [Object.create()](#objectcreate)
 - [Object.assign()](#objectassign)
+- [Set](#set)
 - [Variables](#variables)
 - [Operators](#operators)
 - [Escape Sequences in Strings](#escape-sequences-in-strings)
@@ -308,6 +309,34 @@ console.log(target);
 console.log(returnedTarget);
 // expected output: Object { a: 1, b: 4, c: 5 }
 ```
+
+## Set
+A Set is a collection of values. It’s mutable, so your program can add and remove values as it goes. So far, this is just like an array. But there are as many differences between sets and arrays as there are similarities.
+
+First, unlike an array, a set never contains the same value twice. If you try to add a value to a set that’s already in there, nothing happens.
+
+```javascript
+ var desserts = new Set("🍪🍦🍧🍩");
+> desserts.size
+    4
+> desserts.add("🍪");
+    Set [ "🍪", "🍦", "🍧", "🍩" ]
+> desserts.size
+    4
+```
+
+Set can contain any type of JS value. Just as with strings, adding the same object or number more than once has no added effect.
+
+Second, a Set keeps its data organized to make one particular operation fast: membership testing.
+
+```javascript
+> // Check whether "zythum" is a word.
+> arrayOfWords.indexOf("zythum") !== -1  // slow
+    true
+> setOfWords.has("zythum")               // fast
+    true
+```
+
 
 ## Variables
 
